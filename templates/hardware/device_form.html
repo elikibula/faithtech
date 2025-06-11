@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4 text-white p-4 rounded">
+    <h3 class="mb-4">{% if form.instance.pk %}Edit Device{% else %}Add New Device{% endif %}</h3>
+    
+    <form method="post" class="needs-validation text-white" novalidate>
+        {% csrf_token %}
+
+        <!-- Device Name and Contact Information -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                {{ form.name|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.contact|as_crispy_field }}
+            </div>
+        </div>
+
+        <!-- Device Type and Other Device Type -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                {{ form.device_type|as_crispy_field }}
+            </div>
+            <div class="col-md-6" id="other-device-type" style="display: none;">
+                {{ form.other_device_type|as_crispy_field }}
+            </div>
+        </div>
+
+        <!-- Brand and Model -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                {{ form.brand|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.model|as_crispy_field }}
+            </div>
+        </div>
+
+        <!-- Issue Description -->
+        <div class="row mb-3">
+            <div class="col-md-12">
+                {{ form.issue_description|as_crispy_field }}
+            </div>
+        </div>
+
+        <!-- Resolve Description -->
+        <div class="row mb-3">
+            <div class="col-md-12">
+                {{ form.resolve_description|as_crispy_field }}
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="row mb-3">
+            <div class="col-md-12">
+                {{ form.status|as_crispy_field }}
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="{% url 'hardware:device_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Show/hide "Other Device Type" field -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deviceTypeField = document.getElementById('id_device_type');
+        const otherDeviceTypeField = document.getElementById('other-device-type');
+
+        function toggleOtherDeviceType() {
+            if (deviceTypeField.value === 'Others') {
+                otherDeviceTypeField.style.display = 'block';
+            } else {
+                otherDeviceTypeField.style.display = 'none';
+            }
+        }
+
+        toggleOtherDeviceType();
+        deviceTypeField.addEventListener('change', toggleOtherDeviceType);
+    });
+</script>
+{% endblock %}

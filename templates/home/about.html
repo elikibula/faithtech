@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Faith Technology{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Section 1: Hero Section -->
+    <section id="hero" class="d-flex align-items-center justify-content-center text-center text-white" style="height: 100vh">
+        <div class="container mb-2">
+            <h1 class="embossed-text">
+                ABOUT FAITH TECHNOLOGY
+            </h1>
+            <br>
+            
+            <!-- Improved Typing Animation Container -->
+            <div class="typing-container" style="
+                font-family: 'Montserrat', sans-serif;
+                font-size: 1.5rem;
+                font-weight: 600;
+                line-height: 1.6;
+                letter-spacing: 0.5px;
+                padding: 15px;
+                border-left: 4px solid #ff6600;
+                background-color: rgba(255,102,0,0.05);
+                color: white;  
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+                min-height: 200px; /* Ensure space for text */
+            ">
+                <span id="typed-text"></span>  <!-- Removed gradient text styling -->
+                <span class="blinking-cursor" style="
+                    border-right: 3px solid white; 
+                    animation: blink-caret 0.75s step-end infinite;
+                "></span>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: white; }  
+    }
+    
+    @keyframes pulse {
+        from { opacity: 0.95; }
+        to { opacity: 1; }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const text = `As a dedicated Information Technology Engineer and Consultant, We provide comprehensive Tech solutions tailored for Families, Vanua, Communities, Churches and Businesses. Whether you need systems built from scratch, existing infrastructure optimized, troubleshooting support, or ongoing maintenance, we deliver expertise with a personal touch. Let's collaborate to bring your next project to life, or partner through flexible outsourcing to ensure all your IT needs are met with precision and care.`;
+        const typedText = document.getElementById('typed-text');
+        const cursor = document.querySelector('.blinking-cursor');
+        
+        let i = 0;
+        const typingSpeed = 70; // milliseconds per character
+        
+        function typeWriter() {
+            if (i < text.length) {
+                typedText.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, typingSpeed);
+                
+                // Scroll to bottom of container to follow typing
+                typedText.parentElement.scrollTop = typedText.parentElement.scrollHeight;
+            } else {
+                // Animation complete - keep cursor blinking
+                cursor.style.display = 'inline-block';
+            }
+        }
+        
+        // Start the typing effect after a short delay
+        setTimeout(typeWriter, 500);
+    });
+</script>
+
+{% endblock %}

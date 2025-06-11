@@ -11,6 +11,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('news/', include('news.urls')),
     path('shop/', include('shop.urls')),
+    path('hardware/', include('hardware.urls')),
     path('documents/', include(('documents.urls', 'documents'), namespace='documents')),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     #path('accounts/login/', LoginView.as_view(), name='account_login'),

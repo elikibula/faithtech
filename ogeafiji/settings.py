@@ -45,9 +45,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     'news',
     'documents',
-    'family_tree',
     'home',
     'shop',
+    'hardware',
+    'crispy_bootstrap5',
     
 ]
 
@@ -91,6 +92,10 @@ TEMPLATES = [
     },
 ]
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
 WSGI_APPLICATION = 'ogeafiji.wsgi.application'
 
 # Custom user model (optional but recommended)
@@ -111,15 +116,10 @@ LOGOUT_REDIRECT_URL = '/'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

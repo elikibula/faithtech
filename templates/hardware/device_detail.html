@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5 text-white bg-dark p-4 rounded shadow">
+
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h2>Device Repair Summary</h2>
+        <hr class="bg-light">
+    </div>
+
+    <!-- Ticket Info -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <p><strong>Device Name:</strong> {{ device.name }}</p>
+            <p><strong>Contact:</strong> {{ device.contact }}</p>
+            <p><strong>Date Received:</strong> {{ device.date_received|date:"d M Y, H:i A" }}</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Device Type:</strong> {{ device.device_type }}</p>
+            {% if device.device_type == 'Others' %}
+            <p><strong>Other Type:</strong> {{ device.other_device_type }}</p>
+            {% endif %}
+            <p><strong>Status:</strong> {{ device.status }}</p>
+        </div>
+    </div>
+
+    <!-- Device Specs -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <p><strong>Brand:</strong> {{ device.brand }}</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Model:</strong> {{ device.model }}</p>
+        </div>
+    </div>
+
+    <!-- Descriptions -->
+    <div class="mb-3">
+        <p><strong>Issue Description:</strong></p>
+        <div class="bg-secondary text-white p-2 rounded">
+            <p>{{ device.issue_description|linebreaks }}</p>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <p><strong>Resolve Description:</strong></p>
+        <div class="bg-success text-white p-2 rounded">
+            <p>{{ device.resolve_description|linebreaks }}</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'hardware:device_update' device.pk %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'hardware:device_delete' device.pk %}" class="btn btn-danger">Delete</a>
+        <button class="btn btn-info" onclick="window.print()">Print Summary</button>
+    </div>
+</div>
+{% endblock %}

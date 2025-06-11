@@ -6,7 +6,7 @@
     <div class="container">
         <!-- Shop Heading at the Top -->
         <div class="text-center mb-1">
-            <h1 class="fw-bold text-uppercase" style="color: #ff6600;">Welcome to Our Village Shop</h1>
+            <h1 class="fw-bold text-uppercase" style="color: #ff6600;">Welcome to Our Shop</h1>
         </div>
         <div class="row">
             <!-- Products Listing -->
@@ -76,13 +76,10 @@
             <!-- Categories Sidebar -->
             <div class="col-md-3 mt-4">
                 <div class="card shadow-sm border-0">
-                    <div class="card-header bg-dark text-white text-center">
-                        <h4>Categories</h4>
-                    </div>
                     <div class="list-group list-group-flush">
                         <a href="{% url 'shop:product_list' %}" 
                         class="list-group-item list-group-item-action {% if not category %}active{% endif %}">
-                            All Categories
+                            Categories
                         </a>
                         {% for c in categories %}
                         <a href="{% url 'shop:product_list_by_category' c.slug %}" 

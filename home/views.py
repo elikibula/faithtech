@@ -20,5 +20,5 @@ def tutu_view(request):
 def mata_view(request):
     return render(request, 'home/mata.html')
 
-def ogea_view(request):
-    return render(request, 'home/ko_ogea.html')
+def about_view(request):
+    return render(request, 'home/about.html')
