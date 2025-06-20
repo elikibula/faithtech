@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Add New Product</h2>
+    <form method="post" enctype="multipart/form-data" class="shadow-sm p-4 bg-light rounded">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ product_form.non_field_errors }}
+            {{ product_form.name.label_tag }} {{ product_form.name }}
+        </div>
+        <div class="mb-3">
+            {{ product_form.category.label_tag }} {{ product_form.category }}
+        </div>
+        <div class="mb-3">
+            {{ product_form.description.label_tag }} {{ product_form.description }}
+        </div>
+        <div class="mb-3">
+            {{ product_form.price.label_tag }} {{ product_form.price }}
+        </div>
+        <div class="mb-3">
+            {{ product_form.location.label_tag }} {{ product_form.location }}
+        </div>
+
+        <hr>
+        <h5>Upload Product Images</h5>
+        {{ image_formset.management_form }}
+        {% for form in image_formset %}
+        <div class="mb-3">
+            {{ form.image.label_tag }} {{ form.image }}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Submit Product</button>
+    </form>
+</div>
+
+<style>
+    form input, form textarea, form select {
+        width: 100%;
+        padding: 0.5rem;
+        margin-top: 0.2rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.3rem;
+    }
+
+    button.btn-primary {
+        background-color: #ff6600;
+        border-color: #ff6600;
+    }
+
+    button.btn-primary:hover {
+        background-color: #e65c00;
+        border-color: #e65c00;
+    }
+</style>
+{% endblock %}
