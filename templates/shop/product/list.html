@@ -26,24 +26,18 @@
                             <div class="card h-100 border-0 shadow-sm hover-effect">
                                 {% if product.image %}
                                 <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                                {% else %}
+                                <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="No image" style="height: 200px; object-fit: contain;">
                                 {% endif %}
                                 
-                                <!-- Stock badge -->
-                                {% if product.stock > 0 %}
+                                <!-- Availability badge -->
+                                {% if product.available %}
                                 <div class="position-absolute top-0 end-0 m-2">
-                                    <span class="badge 
-                                        {% if product.stock < product.stock_threshold %}bg-warning text-dark
-                                        {% else %}bg-success{% endif %}">
-                                        {% if product.stock < product.stock_threshold %}
-                                            Low Stock ({{ product.stock }} left)
-                                        {% else %}
-                                            In Stock ({{ product.stock }})
-                                        {% endif %}
-                                    </span>
+                                    <span class="badge bg-success">Available</span>
                                 </div>
                                 {% else %}
                                 <div class="position-absolute top-0 end-0 m-2">
-                                    <span class="badge bg-danger">Out of Stock</span>
+                                    <span class="badge bg-danger">Unavailable</span>
                                 </div>
                                 {% endif %}
                                 
@@ -52,16 +46,14 @@
                                     <h6 class="text-primary">${{ product.price }}</h6>
                                     <p class="card-text text-muted">{{ product.description|truncatechars:100 }}</p>
                                     
-                                    <!-- Stock status text -->
+                                    <!-- Location info if available -->
+                                    {% if product.location %}
                                     <div class="mt-2">
-                                        {% if product.stock == 0 %}
-                                        <p class="text-danger mb-0"><i class="fas fa-times-circle"></i> Currently unavailable</p>
-                                        {% elif product.stock < product.stock_threshold %}
-                                        <p class="text-warning mb-0"><i class="fas fa-exclamation-triangle"></i> Only {{ product.stock }} left!</p>
-                                        {% else %}
-                                        <p class="text-success mb-0"><i class="fas fa-check-circle"></i> Available ({{ product.stock }}+ in stock)</p>
-                                        {% endif %}
+                                        <p class="text-muted mb-0 small">
+                                            <i class="fas fa-map-marker-alt text-primary"></i> {{ product.location }}
+                                        </p>
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </a>
@@ -73,13 +65,17 @@
                     {% endfor %}
                 </div>
             </div>
+            
             <!-- Categories Sidebar -->
             <div class="col-md-3 mt-4">
-                <div class="card shadow-sm border-0">
+                <div class="card shadow-sm border-0 sticky-top" style="top: 20px;">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">Browse Categories</h5>
+                    </div>
                     <div class="list-group list-group-flush">
                         <a href="{% url 'shop:product_list' %}" 
                         class="list-group-item list-group-item-action {% if not category %}active{% endif %}">
-                            Categories
+                            All Products
                         </a>
                         {% for c in categories %}
                         <a href="{% url 'shop:product_list_by_category' c.slug %}" 
@@ -106,6 +102,11 @@
     /* Ensure links don't have underline */
     .card-link {
         text-decoration: none !important;
+    }
+    @media (max-width: 991.98px) {
+        .sticky-top {
+            position: static !important;
+        }
     }
 </style>
 {% endblock %}

@@ -1,9 +1,6 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.urls import reverse
-from django.conf import settings
-
-User = get_user_model()
+from django.utils.text import slugify
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -17,15 +14,15 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+    
     def get_absolute_url(self):
         return reverse('shop:product_list_by_category', args=[self.slug])
 
 class Product(models.Model):
-    seller = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='products'
-    )
     category = models.ForeignKey(
         Category,
         related_name='products',
@@ -57,14 +54,6 @@ class Product(models.Model):
         blank=True,
         null=True
     )
-    stock = models.PositiveIntegerField(
-        default=1,
-        help_text="Current inventory count"
-    )
-    stock_threshold = models.PositiveIntegerField(
-        default=2,
-        help_text="Show 'Low Stock' warning when below this number"
-    )
     
     class Meta:
         ordering = ['-created']
@@ -73,26 +62,13 @@ class Product(models.Model):
             models.Index(fields=['slug']),
         ]
     
-    def stock_status(self):
-        if self.stock == 0:
-            return "out-of-stock"
-        elif self.stock < self.stock_threshold:
-            return "low-stock"
-        return "in-stock"
-    
     def __str__(self):
         return f"{self.name} (${self.price})"
-    
-    def get_seller_name(self):
-        return f"{self.seller.first_name} {self.seller.last_name}" if self.seller.first_name else self.seller.username
     
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.id, self.slug])
     
     def save(self, *args, **kwargs):
-        # Auto-set available status based on stock
-        if self.stock == 0:
-            self.available = False
-        elif not self.available and self.stock > 0:
-            self.available = True
+        if not self.slug:
+            self.slug = slugify(self.name)
         super().save(*args, **kwargs)
