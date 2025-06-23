@@ -30,4 +30,5 @@ venv/
 .DS_Store
 
 # Windows
-Thumbs.db
+Thumbs.db__pycache__/
+*.pyc
