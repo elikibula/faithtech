@@ -24,117 +24,176 @@
       </a>
     </div>
   </div>
-</section>
+</section>   
+<!-- Projects Section -->
+<section class="py-5 mb-5 project-section">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 text-center">
+              <h1 class="fw-bold" style="color: #ff6600;">WEB PROJECTS</h1>
+              <p class="lead text-dark" style="color: #ff6600;">Explore my portfolio of completed websites and applications</p>
+          </div>
+      </div>
 
-<div class="container-fluid">
-    <section id="products" class="py-4">
-        <div class="container">
-            <!-- Shop Heading at the Top -->
-           <div class="text-center mb-1">
-                <h1 class="fw-bold text-uppercase" style="color: #ff6600;">Our Shop</h1>
-            </div>
-            <div class="row"> 
-                <!-- Products Listing -->
-                <div class="col-md-12">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        {% if category %}
-                        <a href="{% url 'shop:product_list' %}" class="btn text-dark" style="background-color: #ff6600; border-color: #ff6600;">
-                            <i class="fas fa-arrow-left me-1"></i> Back to Shop
-                        </a>
+      <div class="row g-4">
+          <!-- Project 1 -->
+          <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm hover-effect">
+                  <a href="https://www.dtcfiji.org/" target="_blank" class="text-decoration-none">
+                      <img src="{% static 'assets/dtcfiji.png' %}" class="card-img-top" alt="Davuilevu Theological College" style="height: 200px; object-fit: cover;">
+                      <div class="card-body bg-dark">
+                          <h5 class="card-title text-center" style="color: #ff6600;">Davuilevu Theological College</h5>
+                          <p class="card-text text-center" style="color: #ff6600;">Full-featured officail website for the Davuilevu Theological College</p>
+                      </div>
+                  </a>
+              </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm hover-effect">
+                  <a href="https://project2-url.com" target="_blank" class="text-decoration-none">
+                      <img src="{% static 'images/project2-screenshot.jpg' %}" class="card-img-top" alt="Project 2" style="height: 200px; object-fit: cover;">
+                      <div class="card-body">
+                          <h5 class="card-title text-dark">Business Dashboard</h5>
+                          <p class="card-text text-muted">Analytics platform with real-time data visualization</p>
+                      </div>
+                  </a>
+              </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm hover-effect">
+                  <a href="https://project3-url.com" target="_blank" class="text-decoration-none">
+                      <img src="{% static 'images/project3-screenshot.jpg' %}" class="card-img-top" alt="Project 3" style="height: 200px; object-fit: cover;">
+                      <div class="card-body">
+                          <h5 class="card-title text-dark">Portfolio Website</h5>
+                          <p class="card-text text-muted">Creative showcase for a photography business</p>
+                      </div>
+                  </a>
+              </div>
+          </div>
+      </div>
+
+      <!-- View More Button (optional) -->
+      <div class="row mt-5">
+          <div class="col-12 text-center">
+              <a href="#" class="btn btn-outline-primary px-4 py-2">
+                  View All Projects <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+          </div>
+      </div>
+  </div>
+</section>
+<!--Our Shop Section-->
+<section id="products" class="py-4">
+  <div class="container">
+      <!-- Shop Heading at the Top -->
+      <div class="text-center mb-1">
+          <h1 class="fw-bold text-uppercase" style="color: #ff6600;">Our Shop</h1>
+      </div>
+      <div class="row"> 
+          <!-- Products Listing -->
+          <div class="col-md-12">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                  {% if category %}
+                  <a href="{% url 'shop:product_list' %}" class="btn text-dark" style="background-color: #ff6600; border-color: #ff6600;">
+                      <i class="fas fa-arrow-left me-1"></i> Back to Shop
+                  </a>
+                  {% endif %}
+              </div>
+              
+              <div class="row">
+                  {% for product in products %}
+                  <div class="col-lg-4 col-md-6 mb-4">
+                      <a href="{% url 'shop:product_detail' product.id product.slug %}" class="text-decoration-none text-dark">
+                          <div class="card h-100 border-0 shadow-sm hover-effect">
+                              {% if product.image %}
+                              <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                              {% endif %}
+                              
+                              <!-- Stock badge -->
+                              {% if product.stock > 0 %}
+                              <div class="position-absolute top-0 end-0 m-2">
+                                  <span class="badge 
+                                      {% if product.stock < product.stock_threshold %}bg-warning text-dark
+                                      {% else %}bg-success{% endif %}">
+                                      {% if product.stock < product.stock_threshold %}
+                                          Low Stock ({{ product.stock }} left)
+                                      {% else %}
+                                          In Stock ({{ product.stock }})
+                                      {% endif %}
+                                  </span>
+                              </div>
+                              {% else %}
+                              <div class="position-absolute top-0 end-0 m-2">
+                                  <span class="badge bg-danger">Out of Stock</span>
+                              </div>
+                              {% endif %}
+                              
+                              <div class="card-body">
+                                  <h5 class="card-title">{{ product.name }}</h5>
+                                  <h6 class="text-primary">${{ product.price }}</h6>
+                                  <p class="card-text text-muted">{{ product.description|truncatechars:100 }}</p>
+                                  
+                                  <!-- Stock status text -->
+                                  <div class="mt-2">
+                                      {% if product.stock == 0 %}
+                                      <p class="text-danger mb-0"><i class="fas fa-times-circle"></i> Currently unavailable</p>
+                                      {% elif product.stock < product.stock_threshold %}
+                                      <p class="text-warning mb-0"><i class="fas fa-exclamation-triangle"></i> Only {{ product.stock }} left!</p>
+                                      {% else %}
+                                      <p class="text-success mb-0"><i class="fas fa-check-circle"></i> Available ({{ product.stock }}+ in stock)</p>
+                                      {% endif %}
+                                  </div>
+                              </div>
+                          </div>
+                      </a>
+                  </div>
+                  {% empty %}
+                  <div class="col-12">
+                      <div class="alert alert-info">No products available in this category.</div>
+                  </div>
+                  {% endfor %}
+              </div>
+          </div>                
+      </div>
+  </div>
+</section>
+<!-- Featured News Section -->
+<section id="featured_news" class="py-3 mb-4" style="background-color: #ff6600;">
+    <div class="container">
+        <a href="{% url 'news_list' %}" class="text-decoration-none">
+          <h2 class="text-light text-center">Our Stories</h2>
+        </a>            
+        <div class="row">
+            {% for news in featured_news %}
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 border-0 shadow-sm" style="height: 250px; overflow: hidden;">
+                    <a href="{% url 'news_detail' slug=news.slug %}" style="text-decoration: none; color: inherit;">
+                        {% if news.image %}
+                        <img src="{{ news.image.url }}" alt="{{ news.title }}"
+                            style="width: 100%; height: 100px; object-fit: cover; display: block; border-radius: 0;">
                         {% endif %}
+                        <div class="card-body p-2" style="padding-top: 0;">
+                        <h6 class="card-title mb-1" style="font-size: 0.95rem;">{{ news.title }}</h6>
+                        <p class="card-text mb-1" style="font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            {{ news.content|safe|truncatechars:80 }}
+                        </p>
+                        {% if news.category %}
+                            <small class="text-muted" style="font-size: 0.7rem;">Category: {{ news.category.name }}</small>
+                        {% endif %}
+                        </div>
+                    </a>
                     </div>
-                    
-                    <div class="row">
-                        {% for product in products %}
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <a href="{% url 'shop:product_detail' product.id product.slug %}" class="text-decoration-none text-dark">
-                                <div class="card h-100 border-0 shadow-sm hover-effect">
-                                    {% if product.image %}
-                                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
-                                    {% endif %}
-                                    
-                                    <!-- Stock badge -->
-                                    {% if product.stock > 0 %}
-                                    <div class="position-absolute top-0 end-0 m-2">
-                                        <span class="badge 
-                                            {% if product.stock < product.stock_threshold %}bg-warning text-dark
-                                            {% else %}bg-success{% endif %}">
-                                            {% if product.stock < product.stock_threshold %}
-                                                Low Stock ({{ product.stock }} left)
-                                            {% else %}
-                                                In Stock ({{ product.stock }})
-                                            {% endif %}
-                                        </span>
-                                    </div>
-                                    {% else %}
-                                    <div class="position-absolute top-0 end-0 m-2">
-                                        <span class="badge bg-danger">Out of Stock</span>
-                                    </div>
-                                    {% endif %}
-                                    
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ product.name }}</h5>
-                                        <h6 class="text-primary">${{ product.price }}</h6>
-                                        <p class="card-text text-muted">{{ product.description|truncatechars:100 }}</p>
-                                        
-                                        <!-- Stock status text -->
-                                        <div class="mt-2">
-                                            {% if product.stock == 0 %}
-                                            <p class="text-danger mb-0"><i class="fas fa-times-circle"></i> Currently unavailable</p>
-                                            {% elif product.stock < product.stock_threshold %}
-                                            <p class="text-warning mb-0"><i class="fas fa-exclamation-triangle"></i> Only {{ product.stock }} left!</p>
-                                            {% else %}
-                                            <p class="text-success mb-0"><i class="fas fa-check-circle"></i> Available ({{ product.stock }}+ in stock)</p>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        {% empty %}
-                        <div class="col-12">
-                            <div class="alert alert-info">No products available in this category.</div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>                
-            </div>
+                </div>                                    
+            {% empty %}
+                <p class="text-light">No entry submitted yet!</p>
+            {% endfor %}
         </div>
-    </section>
-    
-    <!-- Featured News Section -->
-    <section id="featured_news" class="py-3 mb-4" style="background-color: #ff6600;">
-        <div class="container">
-            <a href="{% url 'news_list' %}" class="text-decoration-none">
-              <h2 class="text-light text-center">Our Stories</h2>
-            </a>            
-            <div class="row">
-                {% for news in featured_news %}
-                    <div class="col-md-3 mb-4">
-                        <div class="card h-100 border-0 shadow-sm" style="height: 250px; overflow: hidden;">
-                        <a href="{% url 'news_detail' slug=news.slug %}" style="text-decoration: none; color: inherit;">
-                            {% if news.image %}
-                            <img src="{{ news.image.url }}" alt="{{ news.title }}"
-                                style="width: 100%; height: 100px; object-fit: cover; display: block; border-radius: 0;">
-                            {% endif %}
-                            <div class="card-body p-2" style="padding-top: 0;">
-                            <h6 class="card-title mb-1" style="font-size: 0.95rem;">{{ news.title }}</h6>
-                            <p class="card-text mb-1" style="font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                {{ news.content|safe|truncatechars:80 }}
-                            </p>
-                            {% if news.category %}
-                                <small class="text-muted" style="font-size: 0.7rem;">Category: {{ news.category.name }}</small>
-                            {% endif %}
-                            </div>
-                        </a>
-                        </div>
-                    </div>                                    
-                {% empty %}
-                    <p class="text-light">No entry submitted yet!</p>
-                {% endfor %}
-            </div>
-        </div>
-    </section>   
+    </div>
+</section>   
 </div>
 
 <style>
@@ -227,6 +286,40 @@
       margin-bottom: 2rem;
     }
   }
+
+  /* Hover animation for cards */
+  .hover-effect {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-effect:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    
+    /* Ensure text doesn't change color on hover */
+    .card a:hover {
+        color: inherit;
+    }
+
+    .project-section {
+    background: url('/static/assets/worldwideweb.jpg') no-repeat center center / cover;
+    position: relative;
+    }
+
+    .project-section::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* optional overlay */
+        z-index: 0;
+    }
+    .project-section .container {
+        position: relative;
+        z-index: 1;
+    }
+
 </style>
 
 <script>
