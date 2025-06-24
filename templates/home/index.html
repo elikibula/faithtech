@@ -31,7 +31,7 @@
       <div class="row">
           <div class="col-12 text-center">
               <h1 class="fw-bold" style="color: #ff6600;">WEB PROJECTS</h1>
-              <p class="lead text-dark" style="color: #ff6600;">Explore my portfolio of completed websites and applications</p>
+              <p class="lead" style="color: #ff6600;">Explore my portfolio of completed websites and applications</p>
           </div>
       </div>
 
@@ -111,20 +111,11 @@
                           <div class="card h-100 border-0 shadow-sm hover-effect">
                               {% if product.image %}
                               <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
-                              {% endif %}
-<<<<<<< HEAD
-                              
+                              {% endif %}             
                               <div class="card-body bg-dark">
                                   <h5 class="card-title" style="color: #ff6600;">{{ product.name }}</h5>
                                   <h6 class="text-primary text-light">${{ product.price }}</h6>
                                   <p class="card-text" style="color: #ff6600;">{{ product.description|truncatechars:100 }}</p>
-=======
-
-                              <div class="card-body">
-                                  <h5 class="card-title">{{ product.name }}</h5>
-                                  <h6 class="text-primary">${{ product.price }}</h6>
-                                  <p class="card-text text-muted">{{ product.description|truncatechars:100 }}</p>
->>>>>>> b79fe619b28a97fa3fd7501640c723ebaa3bba6a
                               </div>
                           </div>
                       </a>
