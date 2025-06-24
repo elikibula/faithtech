@@ -7,4 +7,3 @@ class DeviceAdmin(admin.ModelAdmin):
     list_filter = ('device_type', 'status', 'date_received')
     search_fields = ('name', 'contact', 'brand', 'model')
     ordering = ('-date_received',)
- 

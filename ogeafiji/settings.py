@@ -27,10 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-nktkwn+g1#kmjbw^_wgr)x@$jep@f8s=&&hoif+wty3908k8n5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
+ALLOWED_HOSTS = ['faithtech.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -49,7 +48,7 @@ INSTALLED_APPS = [
     'shop',
     'hardware',
     'crispy_bootstrap5',
-    
+
 ]
 
 AUTHENTICATION_BACKENDS = (
